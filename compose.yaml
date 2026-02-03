@@ -1,0 +1,42 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: wp-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppassword
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wp-server
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppassword
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+    volumes:
+      - wp_data:/var/www/html
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - kuma_data:/app/data
+
+volumes:
+  db_data:
+  wp_data:
+  kuma_data:
