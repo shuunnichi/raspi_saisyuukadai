@@ -3,7 +3,7 @@
 
 ## 1. 目的と完成条件
 
-本手順書では、Raspberry Pi 400（Raspberry Pi OS）を対象に、Docker Composeを用いてWebサーバ（WordPress）、データベース（MySQL）、およびリアルタイム監視ツール（Uptime-Kuma）が連携する環境を構築する 。
+本手順書では、Raspberry Pi 400（Raspberry Pi OS）を対象に、Docker Composeを用いてWebサーバ（WordPress）、データベース（MySQL）、およびリアルタイム監視ツール（Uptime-Kuma）が連携する環境を構築する。
 
 完成条件:
 
@@ -15,7 +15,7 @@
     
 4. **発展要素**：ブラウザで `http://localhost:3001` にアクセスし、監視ダッシュボードでWebサイトの死活監視ができること 。
     
-5. OS再起動後も、すべてのサービスが自動的に立ち上がること（永続化） 。
+5. OS再起動後も、すべてのサービスが自動的に立ち上がること（永続化）。
     
 
 6. 前提条件と環境
@@ -42,18 +42,14 @@
 
 ## 3. 構築手順
 
-### 3.1.
+### 3.1.OSのインストールと初期設定（GUI）
 
-OSのインストールと初期設定（GUI）
-
-1. 「Raspberry Pi Imager」を使用し、SDカードに OS を書き込む。
+1. 「Raspberry Pi Imager」を使用し、SDカードにOSを書き込む。
     
 2. 初回起動時のウィザードに従い、日本設定、ユーザー作成、Wi-Fi接続を行う。
     
 
-### 3.2.
-
-システム更新
+### 3.2.システム更新
 
 ターミナルを開き、以下のコマンドでシステムを最新にします。
 
@@ -63,9 +59,7 @@ Bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 3.3.
-
-セキュリティ設定（UFW）
+### 3.3.セキュリティ設定（UFW）
 
 外部からのアクセスを制限します。Web用（8080）と監視用（3001）のポートを許可します。
 
@@ -78,12 +72,10 @@ sudo ufw allow 3001/tcp
 sudo ufw enable
 ```
 
-- **確認**: `sudo ufw status` で 8080 と 3001 が ALLOW になっていることを確認 。
+- **確認**: `sudo ufw status` で8080と3001が ALLOW になっていることを確認 。
     
 
-### 3.4.
-
-Docker環境の構築
+### 3.4.Docker環境の構築
 
 1. **インストール**: `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`
     
@@ -92,9 +84,7 @@ Docker環境の構築
 3. **反映**: 設定を反映させるため、一度 `sudo reboot` で再起動する 。
     
 
-### 3.5.
-
-Docker Composeによる環境構築（発展要素）
+### 3.5.Docker Composeによる環境構築（発展要素）
 
 作業ディレクトリを作成し、3つのサービス（DB、WP、監視）を定義する設定ファイルを作成します。
 
@@ -155,9 +145,7 @@ volumes:
 ```
 
 
-### 3.6.
-
-サービスの起動
+### 3.6.サービスの起動
 
 Bash
 
